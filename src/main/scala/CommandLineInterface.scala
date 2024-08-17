@@ -21,22 +21,39 @@ object CommandLineInterface extends App {
         println("Enter a description: ")
         val description = readLine()
         val updatedTasks = TodoApp.addTask(tasks,description)
-        loop(updatedTasks)
+        updatedTasks match {
+          case Right(tasks) => loop(tasks)
+          case Left(error) =>
+            println(s"Error: $error ")
+            loop(tasks)
+        }
 
       case "2" =>
         println("Enter the Id of Task you would like to remove: ")
         val id = readInt()
         val updatedTasks = TodoApp.removeTask(tasks,id)
-        loop(updatedTasks)
+        updatedTasks match {
+          case Right(tasks) => loop(tasks)
+          case Left(error) =>
+            println(s"Error: $error ")
+            loop(tasks)
+
+        }
 
       case "3" =>
         println("Enter the Id of Task you would like to complete: ")
         val id = readInt()
         val updatedTasks = TodoApp.completeTask(tasks,id)
-        loop(updatedTasks)
+        updatedTasks match {
+          case Right(tasks) => loop(tasks)
+          case Left(error) =>
+            println(s"Error: $error ")
+            loop(tasks)
+        }
       case "4" =>
         println("\nYour tasks:")
         println(TodoApp.listTasks(tasks))
+        Thread.sleep(1000)
         loop(tasks)
 
       case "5" =>
