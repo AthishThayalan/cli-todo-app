@@ -1,3 +1,4 @@
+import scala.collection.IterableOnce.iterableOnceExtensionMethods
 
 object TodoApp {
   def addTask(tasks: List[Task], description: String): List[Task] = {
@@ -9,5 +10,15 @@ object TodoApp {
 
   def removeTask(tasks:List[Task],id:Int): List[Task] = {
     tasks.filterNot(_.id == id ) // if ids match then filter it out (remove it)
+  }
+
+  def completeTask(tasks:List[Task] , id:Int): List[Task] = {
+    tasks.map {
+      case task if task.id == id => task.copy(isCompleted = true)
+      case task => task
+    }
+    // if id matches then replace with a copy (function way)
+    // else keep as is
+
   }
 }
