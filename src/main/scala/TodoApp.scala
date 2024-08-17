@@ -23,9 +23,14 @@ object TodoApp {
   }
 
   def listTasks(tasks: List[Task]): String = {
-    tasks.map { task =>
-      val status = if (task.isCompleted) "[x]" else "[ ]"
-      s"${task.id}. $status ${task.description}"
-    }.mkString("\n")
+    if(tasks.isEmpty){
+      return "You have no current tasks ..."
+    } else {
+      tasks.map { task =>
+        val status = if (task.isCompleted) "[x]" else "[ ]"
+        s"${task.id}. $status ${task.description}"
+      }.mkString("\n")
+    }
+
   }
 }

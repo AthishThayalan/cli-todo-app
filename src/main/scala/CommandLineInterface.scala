@@ -1,9 +1,9 @@
-object CommandLineInterface {
+import scala.annotation.tailrec
+import scala.io.StdIn.{readInt, readLine}
 
-  def main(args: Array[String]): Unit = {
-    loop()
-  }
+object CommandLineInterface extends App {
 
+  @tailrec
   def loop(tasks:List[Task] = List.empty[Task]): Unit = {
     println("\nTo-Do List Application")
     println("----------------------")
@@ -14,14 +14,44 @@ object CommandLineInterface {
     println("5. Exit")
 
     print("\nEnter your choice: ")
-    val choice = scala.io.StdIn.readLine()
+    val choice = readLine()
 
     choice match {
       case "1" =>
-        println("Enter a descr")
+        println("Enter a description: ")
+        val description = readLine()
+        val updatedTasks = TodoApp.addTask(tasks,description)
+        loop(updatedTasks)
+
+      case "2" =>
+        println("Enter the Id of Task you would like to remove: ")
+        val id = readInt()
+        val updatedTasks = TodoApp.removeTask(tasks,id)
+        loop(updatedTasks)
+
+      case "3" =>
+        println("Enter the Id of Task you would like to complete: ")
+        val id = readInt()
+        val updatedTasks = TodoApp.completeTask(tasks,id)
+        loop(updatedTasks)
+      case "4" =>
+        println("\nYour tasks:")
+        println(TodoApp.listTasks(tasks))
+        loop(tasks)
+
+      case "5" =>
+        println("Goodbye!")
+        System.exit(0)
+
+      case _ =>
+        println("Invalid choice, please try again.")
+        loop(tasks)
+
     }
 
 
   }
+
+  loop()
 
 }
