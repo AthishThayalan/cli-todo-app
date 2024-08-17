@@ -8,11 +8,11 @@ object TodoApp {
     tasks :+ newTask
   }
 
-  def removeTask(tasks:List[Task],id:Int): List[Task] = {
-    tasks.filterNot(_.id == id ) // if ids match then filter it out (remove it)
+  def removeTask(tasks: List[Task], id: Int): List[Task] = {
+    tasks.filterNot(_.id == id) // if ids match then filter it out (remove it)
   }
 
-  def completeTask(tasks:List[Task] , id:Int): List[Task] = {
+  def completeTask(tasks: List[Task], id: Int): List[Task] = {
     tasks.map {
       case task if task.id == id => task.copy(isCompleted = true)
       case task => task
@@ -20,5 +20,12 @@ object TodoApp {
     // if id matches then replace with a copy (function way)
     // else keep as is
 
+  }
+
+  def listTasks(tasks: List[Task]): String = {
+    tasks.map { task =>
+      val status = if (task.isCompleted) "[x]" else "[ ]"
+      s"${task.id}. $status ${task.description}"
+    }.mkString("\n")
   }
 }
